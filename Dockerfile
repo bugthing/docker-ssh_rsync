@@ -1,8 +1,10 @@
 FROM base/archlinux
-RUN pacman -Syy && pacman -S --noconfirm --quiet openssh rsync
-VOLUME ["/storage"]
+RUN pacman -Syy --noconfirm --quiet && pacman -S --noconfirm --quiet openssh rsync
+RUN /usr/bin/useradd --home-dir /storage -g users -s /bin/bash user
+RUN /usr/bin/ssh-keygen -A
+RUN echo 'root:roottoor' | chpasswd
+RUN echo 'user:userresu' | chpasswd
 ADD ./files/sshd_config /etc/ssh/sshd_config
 EXPOSE 22
-CMD /usr/bin/ssh-keygen  -f /etc/ssh/ssh_host_rsa_key -t rsa -N '' &&\
-    /usr/bin/useradd -m -g users -s /usr/bin/nologin user &&\
-    /usr/bin/sshd -D -f /etc/ssh/sshd_config
+VOLUME ["/storage"]
+CMD /usr/bin/sshd -D -f /etc/ssh/sshd_config

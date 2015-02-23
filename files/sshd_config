@@ -12,3 +12,4 @@ PubkeyAuthentication yes
 AuthorizedKeysFile      /storage/%u_authorized_keys
 PasswordAuthentication no
 Subsystem   sftp    /usr/lib/ssh/sftp-server
+UsePAM no
