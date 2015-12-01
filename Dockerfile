@@ -1,5 +1,5 @@
 FROM base/archlinux
-RUN pacman -Syy --noconfirm --quiet && pacman -S --noconfirm --quiet openssh rsync
+RUN pacman -Sy --noconfirm --quiet && pacman -S --noconfirm --quiet openssl openssh rsync
 RUN /usr/bin/useradd --home-dir /storage -g users -s /bin/bash user
 RUN /usr/bin/ssh-keygen -A
 RUN echo 'root:roottoor' | chpasswd
