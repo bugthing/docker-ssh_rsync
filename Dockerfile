@@ -1,5 +1,10 @@
 FROM base/archlinux
-RUN pacman -Sy --noconfirm --quiet && pacman -S --noconfirm --quiet openssl openssh rsync
+RUN pacman --noconfirm -Sy archlinux-keyring \
+    && pacman-key --populate \
+    && pacman-key --refresh-keys \
+    && pacman --noconfirm -Syyuu \
+    && pacman-db-upgrade
+RUN pacman -S --noconfirm --quiet openssl openssh rsync
 RUN /usr/bin/useradd --home-dir /storage -g users -s /bin/bash user
 RUN /usr/bin/ssh-keygen -A
 RUN echo 'root:roottoor' | chpasswd
